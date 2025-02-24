@@ -5,7 +5,7 @@ export const wordContext = createContext(null)
 const DictionaryContext = ({ children }) => {
     const [words, setWords] = useState([])
     const [searchWord, setSearchWord] = useState('')
-    const [result, setResult] = useState({})
+    const [result, setResult] = useState([])
     // console.log(result);
     useEffect(() => {
         fetch('/updatedWords.json')
@@ -14,8 +14,8 @@ const DictionaryContext = ({ children }) => {
             .catch(error => console.log(error))
     }, [])
     useEffect(() => {
-        setResult(words.filter(word => word.en === searchWord))
-    }, [searchWord])
+        setResult(words.filter(word => word.en.toLowerCase() === searchWord.toLowerCase()))
+    }, [searchWord, words])
 
     const info = { words, setSearchWord,result }
     return (

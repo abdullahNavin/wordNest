@@ -3,7 +3,7 @@ import { IoSearch } from "react-icons/io5";
 import useWordHook from '../Hook/useWordHook';
 
 const SearchBox = () => {
-    const { words, setSearchWord } = useWordHook()
+    const { setSearchWord } = useWordHook()
     // console.log(words);
     return (
         <div className='mt-7'>

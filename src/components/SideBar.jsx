@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ImHome3 } from "react-icons/im";
 import { LuHistory } from "react-icons/lu";
