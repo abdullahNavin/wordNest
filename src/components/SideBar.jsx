@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 
 const SideBar = () => {
     return (
-        <div className='flex flex-col justify-evenly items-center bg-[#11269023] w-[60px] border border-gray-900 p-1 rounded-full '>
+        <div className='flex flex-col justify-evenly items-center bg-[#11269023] w-[60px] border border-gray-500 p-1 rounded-full '>
             <NavLink to={'/'}><ImHome3 className='text-2xl'/></NavLink>
             <NavLink to={'/history'}><LuHistory className='text-2xl'/></NavLink>
             <NavLink to={'/playlist'}><MdOutlineBookmarkAdd className='text-2xl'/></NavLink>

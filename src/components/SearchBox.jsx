@@ -1,11 +1,15 @@
 import React from 'react';
 import { IoSearch } from "react-icons/io5";
+import useWordHook from '../Hook/useWordHook';
 
 const SearchBox = () => {
+    const { words, setSearchWord } = useWordHook()
+    // console.log(words);
     return (
         <div className='mt-7'>
             <div className="relative w-96">
                 <input
+                    onChange={(e) => setSearchWord(e.target.value)}
                     type="text"
                     placeholder="Search a word"
                     className="w-full rounded-full pl-4 pr-10 py-2 border border-gray-400 outline-none white-shadow focus:border-transparent transition-all"

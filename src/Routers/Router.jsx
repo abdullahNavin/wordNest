@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import MainHome from './MainHome';
 import Home from './Home';
+import Resultbox from '../components/Resultbox';
 
 const Router =createBrowserRouter([
     {
@@ -11,6 +12,10 @@ const Router =createBrowserRouter([
             {
                 path:'/',
                 element:<Home></Home>
+            },
+            {
+                path:'history',
+                element:<Resultbox></Resultbox>
             }
         ]
     }
