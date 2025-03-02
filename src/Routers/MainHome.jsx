@@ -5,7 +5,7 @@ const MainHome = () => {
 
     return (
         <div className='mainBG h-screen w-full'>
-            <div className='glassy py-6 px-3.5 flex'>
+            <div className='glassy py-6 px-3.5 flex gap-4'>
                 <SideBar/>
                 <Content />
             </div>
