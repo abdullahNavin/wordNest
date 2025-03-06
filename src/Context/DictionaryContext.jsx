@@ -1,23 +1,28 @@
-import { createContext, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useState } from "react";
+import useaxiosPublic from "../Axios-Instance/useaxiosPublic";
 
 export const wordContext = createContext(null)
 
 const DictionaryContext = ({ children }) => {
-    const [words, setWords] = useState([])
-    const [searchWord, setSearchWord] = useState('')
-    const [result, setResult] = useState([])
-    // console.log(result);
-    useEffect(() => {
-        fetch('/updatedWords.json')
-            .then(res => res.json())
-            .then(data => setWords(data))
-            .catch(error => console.log(error))
-    }, [])
-    useEffect(() => {
-        setResult(words.filter(word => word.en.toLowerCase() === searchWord.toLowerCase()))
-    }, [searchWord, words])
 
-    const info = { words, setSearchWord,result }
+    const [searchWord, setSearchWord] = useState('')
+    const axiosPublic = useaxiosPublic()
+
+    const { isPending, error, data } = useQuery({
+        queryKey: ['translation',searchWord],
+        queryFn: async () => {
+            if(!searchWord) {
+                return null
+            }
+            const res = await axiosPublic.get(`translation/${searchWord}`)
+            return res.data
+        },
+        enabled: !!searchWord
+    })
+    // console.log(data);
+
+    const info = { setSearchWord, data, isPending }
     return (
         <wordContext.Provider value={info}>
             {children}

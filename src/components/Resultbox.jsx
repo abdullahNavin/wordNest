@@ -1,12 +1,12 @@
 import useWordHook from '../Hook/useWordHook';
 
 const Resultbox = () => {
-    const { result } = useWordHook()
-    console.log(result);
-    if (result.length === 0) {
+    const { data, isPending } = useWordHook()
+    // console.log(data);
+    if (!data) {
         return <p className='text-center text-gray-400 text-xl italic'>Search a word</p>
     }
-    const { bn, bn_syns, en, en_syns, sents, de } = result[0]
+    const { bn, bn_syns, en, en_syns, sents, de, de_syns } = data
     return (
         <div className='flex gap-4'>
             <div className='border rounded-xl flex-1'>
@@ -21,7 +21,7 @@ const Resultbox = () => {
                 </div>
                 <div className='p-1.5'>
                     <h1 className='text-xl text-gray-300 mb-1'>Example:</h1>
-                    <p className='italic text-gray-400'>{sents[0]}</p>
+                    <p className='italic text-gray-400'>{sents?.[0]}</p>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@ const Resultbox = () => {
                 </div>
                 <div className='border-b p-1.5'>
                     <h1 className='text-xl text-gray-300 mb-1'>Synonym:</h1>
-                    <p>{bn_syns?.slice(0, 9).join(', ')}</p>
+                    <p>{de_syns?.slice(0, 9).join(', ')}</p>
                 </div>
                 <div className='p-1.5'>
                     <h1 className='text-xl text-gray-300 mb-1'>Example:</h1>

@@ -4,7 +4,7 @@ import useWordHook from '../Hook/useWordHook';
 
 const SearchBox = () => {
     const { setSearchWord } = useWordHook()
-    // console.log(words);
+
     return (
         <div className='mt-7'>
             <div className="relative w-96">
