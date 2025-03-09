@@ -5,14 +5,14 @@ import useaxiosPublic from "../Axios-Instance/useaxiosPublic";
 export const wordContext = createContext(null)
 
 const DictionaryContext = ({ children }) => {
-
     const [searchWord, setSearchWord] = useState('')
+    const [suggetionWord, setSuggetionWord] = useState('')
     const axiosPublic = useaxiosPublic()
 
     const { isPending, error, data } = useQuery({
-        queryKey: ['translation',searchWord],
+        queryKey: ['translation', searchWord],
         queryFn: async () => {
-            if(!searchWord) {
+            if (!searchWord) {
                 return null
             }
             const res = await axiosPublic.get(`translation/${searchWord}`)
@@ -20,9 +20,17 @@ const DictionaryContext = ({ children }) => {
         },
         enabled: !!searchWord
     })
-    // console.log(data);
 
-    const info = { setSearchWord, data, isPending }
+    const { isPending: suggetionPenting, data: suggetionData } = useQuery({
+        queryKey: ['suggetion', suggetionWord],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/suggetion/${suggetionWord}`)
+            return res.data
+        },
+        enabled: !!suggetionWord
+    })
+
+    const info = { setSearchWord, data, isPending, setSuggetionWord,suggetionData }
     return (
         <wordContext.Provider value={info}>
             {children}

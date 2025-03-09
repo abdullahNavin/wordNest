@@ -3,13 +3,13 @@ import { IoSearch } from "react-icons/io5";
 import useWordHook from '../Hook/useWordHook';
 
 const SearchBox = () => {
-    const { setSearchWord } = useWordHook()
+    const { setSearchWord, setSuggetionWord, suggetionData } = useWordHook()
 
     return (
         <div className='mt-7'>
             <div className="relative w-96">
                 <input
-                    onChange={(e) => setSearchWord(e.target.value)}
+                    onChange={(e) => setSuggetionWord(e.target.value)}
                     type="text"
                     placeholder="Search a word"
                     className="w-full rounded-full pl-4 pr-10 py-2 border border-gray-400 outline-none white-shadow focus:border-transparent transition-all"
@@ -18,6 +18,14 @@ const SearchBox = () => {
                     <IoSearch />
                 </div>
             </div>
+            {
+                suggetionData &&
+                <ul>
+                    {
+                        suggetionData?.map((word, index) => <li className='' key={index}>{word}</li>)
+                    }
+                </ul>
+            }
         </div>
     );
 };
