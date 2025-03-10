@@ -6,10 +6,14 @@ export const wordContext = createContext(null)
 
 const DictionaryContext = ({ children }) => {
     const [searchWord, setSearchWord] = useState('')
-    const [suggetionWord, setSuggetionWord] = useState('')
+    const [suggestionWord, setSuggestionWord] = useState('')
+    const [inputValue, setInputValue] = useState(suggestionWord)
+    const [showSuggestion, setShowSuggestion] = useState(true)
     const axiosPublic = useaxiosPublic()
 
-    const { isPending, error, data } = useQuery({
+
+
+    const { isLoading, data } = useQuery({
         queryKey: ['translation', searchWord],
         queryFn: async () => {
             if (!searchWord) {
@@ -21,16 +25,27 @@ const DictionaryContext = ({ children }) => {
         enabled: !!searchWord
     })
 
-    const { isPending: suggetionPenting, data: suggetionData } = useQuery({
-        queryKey: ['suggetion', suggetionWord],
+    const { data: suggestionData } = useQuery({
+        queryKey: ['suggestion', suggestionWord],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/suggetion/${suggetionWord}`)
+            const res = await axiosPublic.get(`/suggestion/${suggestionWord}`)
             return res.data
         },
-        enabled: !!suggetionWord
+        enabled: !!suggestionWord
     })
 
-    const info = { setSearchWord, data, isPending, setSuggetionWord,suggetionData }
+    const info = {
+        setSearchWord,
+        inputValue,
+        setInputValue,
+        data,
+        isLoading,
+        setSuggestionWord,
+        suggestionData,
+        suggestionWord,
+        showSuggestion,
+        setShowSuggestion
+    }
     return (
         <wordContext.Provider value={info}>
             {children}

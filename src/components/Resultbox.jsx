@@ -1,11 +1,17 @@
+import { PacmanLoader } from 'react-spinners';
 import useWordHook from '../Hook/useWordHook';
 
 const Resultbox = () => {
-    const { data, isPending } = useWordHook()
-    // console.log(data);
+    const { data, isLoading } = useWordHook()
+    // console.log(isLoading);
+
+    if (isLoading) {
+        return <PacmanLoader color='gray' />
+    }
     if (!data) {
         return <p className='text-center text-gray-400 text-xl italic'>Search a word</p>
     }
+
     const { bn, bn_syns, en, en_syns, sents, de, de_syns } = data
     return (
         <div className='flex gap-4'>
