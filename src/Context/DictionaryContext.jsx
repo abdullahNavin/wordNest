@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useaxiosPublic from "../Axios-Instance/useaxiosPublic";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase/Firebase.config";
 
 export const wordContext = createContext(null)
 
 const DictionaryContext = ({ children }) => {
+    const [user, setUser] = useState({})
     const [searchWord, setSearchWord] = useState('')
     const [suggestionWord, setSuggestionWord] = useState('')
     const [inputValue, setInputValue] = useState(suggestionWord)
@@ -12,6 +15,18 @@ const DictionaryContext = ({ children }) => {
     const axiosPublic = useaxiosPublic()
 
 
+    useEffect(() => {
+        const unsubscribe = () => {
+            onAuthStateChanged(auth, (currentUser) => {
+                setUser(currentUser)
+            })
+        }
+        return () => {
+            unsubscribe()
+        }
+    }, [])
+
+    console.log(user);
 
     const { isLoading, data } = useQuery({
         queryKey: ['translation', searchWord],
@@ -44,7 +59,8 @@ const DictionaryContext = ({ children }) => {
         suggestionData,
         suggestionWord,
         showSuggestion,
-        setShowSuggestion
+        setShowSuggestion,
+        user
     }
     return (
         <wordContext.Provider value={info}>
