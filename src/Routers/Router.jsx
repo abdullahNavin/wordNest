@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import MainHome from './MainHome';
 import Home from './Home';
-import Resultbox from '../components/Resultbox';
+import History from './History';
 
 const Router =createBrowserRouter([
     {
@@ -14,7 +14,7 @@ const Router =createBrowserRouter([
             },
             {
                 path:'history',
-                element:<Resultbox></Resultbox>
+                element:<History></History>
             }
         ]
     }
