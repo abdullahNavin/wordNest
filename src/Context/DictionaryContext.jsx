@@ -14,7 +14,7 @@ const DictionaryContext = ({ children }) => {
     const [showSuggestion, setShowSuggestion] = useState(true)
     const axiosPublic = useaxiosPublic()
 
-
+    // Firebase onAuthState change
     useEffect(() => {
         const unsubscribe = () => {
             onAuthStateChanged(auth, (currentUser) => {
@@ -26,8 +26,7 @@ const DictionaryContext = ({ children }) => {
         }
     }, [])
 
-    console.log(user);
-
+    // Fetch translation data
     const { isLoading, data } = useQuery({
         queryKey: ['translation', searchWord],
         queryFn: async () => {
@@ -39,7 +38,7 @@ const DictionaryContext = ({ children }) => {
         },
         enabled: !!searchWord
     })
-
+    // suggestion part
     const { data: suggestionData } = useQuery({
         queryKey: ['suggestion', suggestionWord],
         queryFn: async () => {
