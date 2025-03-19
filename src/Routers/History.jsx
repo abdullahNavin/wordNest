@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider } from "firebase/auth";
 
 const History = () => {
-    const { data, refetch } = useHistoryData()
+    const { data, refetch,isLoading } = useHistoryData()
     const { user, GoogleSignin } = useWordHook()
     const axiosSecure = useaxiosSecure()
 
@@ -18,7 +18,7 @@ const History = () => {
             .catch(err => console.log(err.message))
     }
 
-    if (!user) {
+    if (!user?.email) {
         return (
             <div className="flex flex-col items-center justify-center gap-2.5 h-full">
                 <h1 className="text-xl">Plese Login to see history</h1>
@@ -28,6 +28,14 @@ const History = () => {
                 >
                     <FcGoogle className="text-xl" /> Sign in with Google
                 </button>
+            </div>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-2.5 h-full">
+                <h1 className="text-xl">Loading...</h1>
             </div>
         )
     }

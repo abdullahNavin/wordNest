@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useaxiosPublic from "../Axios-Instance/useaxiosPublic";
-import { getAuth, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { app } from "../Firebase/Firebase.config";
 
 export const wordContext = createContext(null)
@@ -16,19 +16,18 @@ const DictionaryContext = ({ children }) => {
     const axiosPublic = useaxiosPublic()
     const auth = getAuth(app)
 
-    // Firebase onAuthState change
+
+
     useEffect(() => {
-        const unsubscribe = () => {
-            onAuthStateChanged(auth, (currentUser) => {
-                setUser(currentUser)
-                console.log(currentUser);
-            })
-        }
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+
         return () => {
-            unsubscribe()
-        }
-    }, [auth])
-    console.log(user);
+            unsubscribe(); // Properly clean up the listener
+        };
+    }, [auth]);
+
 
     const GoogleSignin = (provider) => {
         signInWithPopup(auth, provider)
