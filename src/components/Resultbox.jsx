@@ -29,13 +29,17 @@ const Resultbox = () => {
         saveHistory()
     }, [user?.email, data?.en, data?.bn, data?.de])
 
+    useEffect(()=>{
+        console.log(data);
+    },[data])
+
     if (isLoading) {
         return <PacmanLoader color='gray' />
     }
     if (!data) {
         return <p className='text-center text-gray-400 text-xl italic'>Search a word</p>
     }
-    const { bn, bn_syns, en, sents, de, de_syns } = data
+    const { bn, bn_syns, en_syns, sents, de, de_syns } = data
 
     return (
         <div className='flex gap-4'>
@@ -46,12 +50,16 @@ const Resultbox = () => {
                     <p>{bn}</p>
                 </div>
                 <div className='border-b p-1.5'>
-                    <h1 className='text-xl text-gray-300 mb-1'>Synonym:</h1>
+                    <h1 className='text-xl text-gray-300 mb-1'>Synonym: Bangla</h1>
                     <p>{bn_syns?.slice(0, 9).join(', ')}</p>
+                </div>
+                <div className='border-b p-1.5'>
+                    <h1 className='text-xl text-gray-300 mb-1'>Synonym: English</h1>
+                    <p>{en_syns?.slice(0, 9).join(', ')}</p>
                 </div>
                 <div className='p-1.5'>
                     <h1 className='text-xl text-gray-300 mb-1'>Example:</h1>
-                    <p className='italic text-gray-400'>{sents?.[0]}</p>
+                    <p className='text-gray-400'>{sents?.[0]}</p>
                 </div>
             </div>
 
@@ -69,7 +77,7 @@ const Resultbox = () => {
                 </div>
                 <div className='p-1.5'>
                     <h1 className='text-xl text-gray-300 mb-1'>Example:</h1>
-                    <p className='italic text-gray-400'>Coming soon</p>
+                    <p className='text-gray-400'>Coming soon</p>
                 </div>
             </div>
         </div>

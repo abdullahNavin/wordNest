@@ -9,6 +9,7 @@ const MainHome = () => {
                 <SideBar/>
                 <Content />
             </div>
+            
         </div>
     );
 };
