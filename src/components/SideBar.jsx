@@ -4,23 +4,22 @@ import { LuHistory } from "react-icons/lu";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FcGoogle } from 'react-icons/fc';
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { auth } from '../Firebase/Firebase.config';
+import { GoogleAuthProvider } from 'firebase/auth';
 import { VscSignOut } from "react-icons/vsc";
 import useWordHook from '../Hook/useWordHook';
 
 const SideBar = () => {
-    const { user } = useWordHook()
+    const { user, GoogleSignin, logOut } = useWordHook()
 
 
     const provider = new GoogleAuthProvider()
     const handleGoogleLogin = () => {
-        signInWithPopup(auth, provider)
+        GoogleSignin(provider)
             .then(res => console.log(res))
             .catch(err => console.log(err.message))
     };
     const handleSignOut = () => {
-        signOut(auth)
+        logOut()
             .then()
             .catch(err => console.log(err.message))
     }

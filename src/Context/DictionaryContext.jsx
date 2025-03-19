@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import useaxiosPublic from "../Axios-Instance/useaxiosPublic";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../Firebase/Firebase.config";
+import { getAuth, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
+import { app } from "../Firebase/Firebase.config";
 
 export const wordContext = createContext(null)
 
@@ -13,18 +14,28 @@ const DictionaryContext = ({ children }) => {
     const [inputValue, setInputValue] = useState(suggestionWord)
     const [showSuggestion, setShowSuggestion] = useState(true)
     const axiosPublic = useaxiosPublic()
+    const auth = getAuth(app)
 
     // Firebase onAuthState change
     useEffect(() => {
         const unsubscribe = () => {
             onAuthStateChanged(auth, (currentUser) => {
                 setUser(currentUser)
+                console.log(currentUser);
             })
         }
         return () => {
             unsubscribe()
         }
-    }, [])
+    }, [auth])
+    console.log(user);
+
+    const GoogleSignin = (provider) => {
+        signInWithPopup(auth, provider)
+    }
+    const logOut = () => {
+        signOut(auth)
+    }
 
     // Fetch translation data
     const { isLoading, data } = useQuery({
@@ -59,13 +70,18 @@ const DictionaryContext = ({ children }) => {
         suggestionWord,
         showSuggestion,
         setShowSuggestion,
-        user
+        user,
+        GoogleSignin,
+        logOut
     }
     return (
         <wordContext.Provider value={info}>
             {children}
         </wordContext.Provider>
     );
+};
+DictionaryContext.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 export default DictionaryContext;

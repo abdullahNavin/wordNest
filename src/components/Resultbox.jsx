@@ -29,9 +29,6 @@ const Resultbox = () => {
         saveHistory()
     }, [user?.email, data?.en, data?.bn, data?.de])
 
-    useEffect(()=>{
-        console.log(data);
-    },[data])
 
     if (isLoading) {
         return <PacmanLoader color='gray' />

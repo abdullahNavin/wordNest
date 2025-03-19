@@ -4,10 +4,10 @@ const Content = () => {
     return (
         <div className='flex-1/2 h-full'>
             <div className='flex justify-center items-center'>
-                <img className='w-1/5' src="/src/assets/Grey_Black_Simple_Monoline_Modern_Elegant_Fashion_Logo-removebg-preview.png" alt="" />
+                <img className='w-1/5' src="https://i.ibb.co.com/NgV0ww4V/logo.png" alt="" />
             </div>
             <div className='h-[calc(100vh-8rem)] w-full'>
-                <Outlet/>
+                <Outlet />
             </div>
         </div>
     );
