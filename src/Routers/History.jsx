@@ -1,13 +1,13 @@
-import { toast, ToastContainer } from "react-toastify";
 import useaxiosSecure from "../Axios-Instance/useaxiosSecure";
 import useHistoryData from "../Hook/useHistoryData";
 import { BiSolidTrash } from "react-icons/bi";
 import useWordHook from "../Hook/useWordHook";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider } from "firebase/auth";
+import { toast } from "sonner";
 
 const History = () => {
-    const { data, refetch,isLoading } = useHistoryData()
+    const { data, refetch, isLoading } = useHistoryData()
     const { user, GoogleSignin } = useWordHook()
     const axiosSecure = useaxiosSecure()
 
@@ -52,7 +52,7 @@ const History = () => {
     const handleHistoryDelete = async (id) => {
         const result = await axiosSecure.delete(`/history/${id}`)
         if (result.data.deletedCount === 1) {
-            toast.success("Deleted successfully")
+            toast.success('Deleted successfully')
             refetch()
         }
     }
@@ -85,7 +85,6 @@ const History = () => {
                         }
                     </tbody>
                 </table>
-                <ToastContainer autoClose={2000} />
             </div>
         </div>
     );

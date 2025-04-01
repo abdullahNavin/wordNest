@@ -8,10 +8,10 @@ import { app } from "../Firebase/Firebase.config";
 export const wordContext = createContext(null)
 
 const DictionaryContext = ({ children }) => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
+    const [userLoading, setUserLoading] = useState(true)
     const [searchWord, setSearchWord] = useState('')
     const [suggestionWord, setSuggestionWord] = useState('')
-    const [inputValue, setInputValue] = useState(suggestionWord)
     const [showSuggestion, setShowSuggestion] = useState(true)
     const axiosPublic = useaxiosPublic()
     const auth = getAuth(app)
@@ -21,6 +21,7 @@ const DictionaryContext = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
+            setUserLoading(false);
         });
 
         return () => {
@@ -36,8 +37,27 @@ const DictionaryContext = ({ children }) => {
         signOut(auth)
     }
 
+    const saveHistory = async (data) => {
+        if (!user?.email || !data) {
+            return
+        }
+        try {
+            const result = await axiosPublic.post('/history', {
+                email: user.email,
+                en: data?.en,
+                bn: data?.bn,
+                de: data?.de,
+                DateOfSearch: new Date()
+            })
+            return result.data
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
     // Fetch translation data
-    const { isLoading, data } = useQuery({
+    const { isLoading, data = null } = useQuery({
         queryKey: ['translation', searchWord],
         queryFn: async () => {
             if (!searchWord) {
@@ -46,8 +66,19 @@ const DictionaryContext = ({ children }) => {
             const res = await axiosPublic.get(`translation/${searchWord}`)
             return res.data
         },
-        enabled: !!searchWord
+        enabled: !!searchWord,
+        
+        onSuccess: (data) => {
+            if(userLoading){
+                console.log('User is loading...');
+            }
+            if (user?.email) {
+                saveHistory(data)
+                console.log('History saved successfully!');
+            }
+        }
     })
+
     // suggestion part
     const { data: suggestionData } = useQuery({
         queryKey: ['suggestion', suggestionWord],
@@ -60,8 +91,6 @@ const DictionaryContext = ({ children }) => {
 
     const info = {
         setSearchWord,
-        inputValue,
-        setInputValue,
         data,
         isLoading,
         setSuggestionWord,

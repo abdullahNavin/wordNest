@@ -1,33 +1,33 @@
 import { PacmanLoader } from 'react-spinners';
 import useWordHook from '../Hook/useWordHook';
-import useaxiosPublic from '../Axios-Instance/useaxiosPublic';
+// import useaxiosPublic from '../Axios-Instance/useaxiosPublic';
 import { useEffect } from 'react';
 
 const Resultbox = () => {
     const { data, isLoading, user } = useWordHook()
-    const axiosPublic = useaxiosPublic()
+    // const axiosPublic = useaxiosPublic()
 
-    const saveHistory = async () => {
-        if(!user.email || !data){
-            return
-        }
-        try {
-            const result = await axiosPublic.post('/history', {
-                email: user.email,
-                en: data?.en,
-                bn: data?.bn,
-                de: data?.de,
-                DateOfSearch: new Date()
-            })
-            return result.data
-        }
-        catch (err) {
-            console.error(err.message);
-        }
-    }
-    useEffect(() => {
-        saveHistory()
-    }, [user?.email, data?.en, data?.bn, data?.de])
+    // const saveHistory = async () => {
+    //     if (!user?.email || !data) {
+    //         return
+    //     }
+    //     try {
+    //         const result = await axiosPublic.post('/history', {
+    //             email: user.email,
+    //             en: data?.en,
+    //             bn: data?.bn,
+    //             de: data?.de,
+    //             DateOfSearch: new Date()
+    //         })
+    //         return result.data
+    //     }
+    //     catch (err) {
+    //         console.error(err.message);
+    //     }
+    // }
+    // useEffect(() => {
+    //     saveHistory()
+    // }, [user?.email, data])
 
 
     if (isLoading) {
