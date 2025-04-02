@@ -67,17 +67,12 @@ const DictionaryContext = ({ children }) => {
             return res.data
         },
         enabled: !!searchWord,
-        
-        onSuccess: (data) => {
-            if(userLoading){
-                console.log('User is loading...');
-            }
-            if (user?.email) {
-                saveHistory(data)
-                console.log('History saved successfully!');
-            }
-        }
+
     })
+
+    useEffect(() => {
+        saveHistory(data)
+    }, [data, user?.email])
 
     // suggestion part
     const { data: suggestionData } = useQuery({

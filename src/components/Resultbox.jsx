@@ -1,10 +1,9 @@
 import { PacmanLoader } from 'react-spinners';
 import useWordHook from '../Hook/useWordHook';
 // import useaxiosPublic from '../Axios-Instance/useaxiosPublic';
-import { useEffect } from 'react';
 
 const Resultbox = () => {
-    const { data, isLoading, user } = useWordHook()
+    const { data, isLoading,  } = useWordHook()
     // const axiosPublic = useaxiosPublic()
 
     // const saveHistory = async () => {
